@@ -67,6 +67,7 @@
       };
 
       function send_msg(msg) {
+        console.log("send_msg:-", msg);
         window.top.frames[1].postMessage(msg, "https://smshub.ca:8443/crm/");
       }
     </script>
