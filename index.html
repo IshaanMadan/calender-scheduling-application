@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="post">
+      <label>Email : </label><input type="email" name="email" /><br />
+      <label>Phone : </label><input type="phone" name="phone" /><br />
+      <label>Credit card v2: </label><input type="text" name="ccnum" /><br />
+      <input type="submit" />
+    </form>
+    <script>
+      document
+        .getElementsByName("email")[0]
+        .addEventListener("blur", function (event) {
+          checkEmailLoad();
+        });
+      document
+        .getElementsByName("phone")[0]
+        .addEventListener("blur", function (event) {
+          //checkEmail();
+        });
+      document
+        .getElementsByName("ccnum")[0]
+        .addEventListener("focus", function (event) {
+          send_msg("4");
+        });
+      document
+        .getElementsByName("ccnum")[0]
+        .addEventListener("blur", function (event) {
+          send_msg("5");
+        });
+
+      function checkEmail() {
+        let email = document.getElementsByName("email")[0].value;
+        if (email.length == 0) {
+          send_msg("0");
+        }
+      }
+
+      function checkEmailLoad() {
+        let email = document.getElementsByName("email")[0].value;
+        if (email.length == 0) {
+          send_msg("0");
+        } else {
+          send_msg("1");
+        }
+      }
+
+      window.addEventListener(
+        "message",
+        (event) => {
+          if (event.data == "1") {
+            checkEmail();
+          }
+        },
+        false
+      );
+
+      window.onload = function (e) {
+        console.log("window.onload");
+        checkEmailLoad();
+      };
+
+      function send_msg(msg) {
+        window.top.frames[1].postMessage(msg, "https://smshub.ca:8443/crm/");
+      }
+    </script>
+  </body>
+</html>
